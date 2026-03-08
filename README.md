@@ -35,7 +35,22 @@ The engine is designed as a **multi-threaded asynchronous media pipeline** with 
 
 # Architecture Overview
 
-![4K Vulkan Playback Demo](docs/architecture.js)
+mermaid
+graph TD
+    %% Title
+    subgraph Thiya Media Engine
+    A[Video File FD] --> B[MediaExtractor Thread]
+    B --> C[MediaCodec Video Decoder]
+    C --> D[AImageReader]
+    D --> E[AHardwareBuffer]
+    E --> F[Vulkan Renderer]
+    
+    F --> G[Compute Pipeline]
+    F --> H[Graphics Pipeline]
+    
+    G --> I[Luma/Chroma Extraction]
+    H --> J[Display]
+    end
 
 The engine is structured as an asynchronous media pipeline where decoding, rendering, and audio streaming operate independently while synchronized through explicit CPU and GPU primitives.
 
