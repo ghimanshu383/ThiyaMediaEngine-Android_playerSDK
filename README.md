@@ -17,3 +17,23 @@ pipeline processing and GPU timing instrumentation.
 - No memory leaks (validated with Vulkan validation layers)
 
 ## Architecture Diagram
+
+Video File (FD)
+        ↓
+MediaExtractor Thread
+        ↓
+Video Decoder Thread (MediaCodec)
+        ↓
+AImageReader Listener
+        ↓
+AHardwareBuffer
+        ↓
+Vulkan Renderer Thread
+        ↓
+YCbCr Sampler Conversion
+        ↓
+Compute Pipeline (Luma/Chroma)
+        ↓
+Graphics Pipeline
+        ↓
+     Display
