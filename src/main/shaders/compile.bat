@@ -1,3 +1,0 @@
-glslc D:\androidCompose\OsFeatureNdkDemo\core-native\core-native-video-hardware\src\main\shaders\default_hardware.vert -o D:\androidCompose\OsFeatureNdkDemo\core-native\core-native-video-hardware\src\main\shaders\default_hardware.vert.spv
-glslc D:\androidCompose\OsFeatureNdkDemo\core-native\core-native-video-hardware\src\main\shaders\default_hardware.frag -o D:\androidCompose\OsFeatureNdkDemo\core-native\core-native-video-hardware\src\main\shaders\default_hardware.frag.spv
-glslc D:\androidCompose\OsFeatureNdkDemo\core-native\core-native-video-hardware\src\main\shaders\luma_chroma_gen.comp -o D:\androidCompose\OsFeatureNdkDemo\core-native\core-native-video-hardware\src\main\shaders\luma_chroma_gen.comp.spv
