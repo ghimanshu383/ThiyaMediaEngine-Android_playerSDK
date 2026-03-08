@@ -117,6 +117,10 @@ The project required solving several low-level integration challenges:
 - Debugging and eliminating **Vulkan device memory leaks**  
 - Preventing **Gralloc / AImageReader hardware buffer leaks** through proper surface listener lifecycle management
 
+## Sdk integration and usage example
+
+[Android SDK Integration Example](docs/integration_logic.md)
+
 ## Potential extensions for the engine:
 
 - HDR rendering pipeline support  
