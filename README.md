@@ -17,28 +17,29 @@ pipeline processing and GPU timing instrumentation.
 - No memory leaks (validated with Vulkan validation layers)
 
 ## Architecture Diagram
-graph TD
-    subgraph "Input Layer"
-        FD[Video File / ParcelFileDescriptor]
-    end
 
-    subgraph "Producer Threads"
-        ME[MediaExtractor Thread]
-        VD[Video Decoder Thread: MediaCodec]
-    end
+## Thread Architecture
 
-    subgraph "Zero-Copy Memory Bridge"
-        AL[AImageReader Listener]
-        HB{AHardwareBuffer}
-    end
+- Extractor Thread
+- Video Decoder Thread
+- Audio Decoder Thread
+- Surface Listener Thread
+- Audio Stream Thread
+- Vulkan Renderer Thread
 
-    subgraph "Vulkan Engine (Consumer Thread)"
-        RT[Vulkan Renderer Thread]
-        YUV[YCbCr Sampler Conversion]
-        CP[Compute Pipeline: Luma/Chroma]
-        GP[Graphics Pipeline]
-    end
+- CPU ↔ CPU : mutex + condition variables
+- CPU ↔ GPU : fences
+- GPU ↔ GPU : semaphores
 
-    subgraph "Output"
-        DS[Surface / Display]
-    end
+## Performance
+
+Device: Moto G86
+GPU: Mali G615 MP2
+
+4K playback results:
+
+YCbCr display pipeline: ~3 ms
+Compute pipeline enabled: ~8 ms
+
+Stable playback for 10+ minutes
+No thermal throttling observed
