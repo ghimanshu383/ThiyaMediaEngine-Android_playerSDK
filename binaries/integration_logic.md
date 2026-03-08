@@ -8,7 +8,7 @@ engine so that the C++ media pipeline can manage the resource lifecycle safely.
 The following example demonstrates how to open a video using the Android file picker
 and pass the detached file descriptor to `ThiyaPlayer`.
 
-### Sample Kotlin integration from gallery videos
+### Sample Kotlin integration for gallery videos
 
 registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
     if (result.resultCode == Activity.RESULT_OK) {
