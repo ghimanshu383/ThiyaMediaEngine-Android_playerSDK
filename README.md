@@ -17,23 +17,28 @@ pipeline processing and GPU timing instrumentation.
 - No memory leaks (validated with Vulkan validation layers)
 
 ## Architecture Diagram
+graph TD
+    subgraph "Input Layer"
+        FD[Video File / ParcelFileDescriptor]
+    end
 
-Video File (FD)
-        ↓
-MediaExtractor Thread
-        ↓
-Video Decoder Thread (MediaCodec)
-        ↓
-AImageReader Listener
-        ↓
-AHardwareBuffer
-        ↓
-Vulkan Renderer Thread
-        ↓
-YCbCr Sampler Conversion
-        ↓
-Compute Pipeline (Luma/Chroma)
-        ↓
-Graphics Pipeline
-        ↓
-     Display
+    subgraph "Producer Threads"
+        ME[MediaExtractor Thread]
+        VD[Video Decoder Thread: MediaCodec]
+    end
+
+    subgraph "Zero-Copy Memory Bridge"
+        AL[AImageReader Listener]
+        HB{AHardwareBuffer}
+    end
+
+    subgraph "Vulkan Engine (Consumer Thread)"
+        RT[Vulkan Renderer Thread]
+        YUV[YCbCr Sampler Conversion]
+        CP[Compute Pipeline: Luma/Chroma]
+        GP[Graphics Pipeline]
+    end
+
+    subgraph "Output"
+        DS[Surface / Display]
+    end
