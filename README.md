@@ -12,6 +12,11 @@ This architecture enables **low-latency processing pipelines** suitable for:
 
 The engine is designed as a **multi-threaded asynchronous media pipeline** with explicit GPU synchronization.
 
+![4K Vulkan Playback Demo](docs/demo.gif)
+
+- 4K video playback with compute pipeline enabled on Mali G615 MC2.
+- GPU timings measured using Vulkan timestamp queries.
+
 ---
 
 # Features
@@ -23,7 +28,7 @@ The engine is designed as a **multi-threaded asynchronous media pipeline** with 
 - Fully **multi-threaded decode and rendering architecture**  
 - GPU timestamp profiling using Vulkan query pools  
 - ImGui runtime debug overlay  
-- Stable **4K playback tested on Mali G615 MP2**  
+- Stable **4K playback tested on Mali G615 MC2**  
 - **No GPU memory leaks** (verified using Vulkan validation layers)
 
 ---
@@ -62,7 +67,7 @@ This design allows **non-blocking decode, compute, and rendering pipelines**.
 # Performance for 4k videos
 
 Device: Moto G86
-GPU: Mali G615 MP2
+GPU: Mali G615 MC2
 
 Measured GPU timings:
 
