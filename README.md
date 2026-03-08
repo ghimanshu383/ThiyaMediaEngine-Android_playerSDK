@@ -35,22 +35,29 @@ The engine is designed as a **multi-threaded asynchronous media pipeline** with 
 
 # Architecture Overview
 
-mermaid
-graph TD
-    %% Title
-    subgraph Thiya Media Engine
-    A[Video File FD] --> B[MediaExtractor Thread]
-    B --> C[MediaCodec Video Decoder]
-    C --> D[AImageReader]
-    D --> E[AHardwareBuffer]
-    E --> F[Vulkan Renderer]
-    
-    F --> G[Compute Pipeline]
-    F --> H[Graphics Pipeline]
-    
-    G --> I[Luma/Chroma Extraction]
-    H --> J[Display]
-    end
+```markdown
+```mermaid
+flowchart LR
+
+subgraph Media Pipeline
+A[Video File FD] --> B[MediaExtractor]
+B --> C[MediaCodec Decoder]
+C --> D[AImageReader]
+D --> E[AHardwareBuffer]
+end
+
+subgraph GPU Pipeline
+E --> F[Vulkan External Image]
+F --> G[YCbCr Sampler Conversion]
+G --> H[Compute Shader Luma Chroma]
+H --> I[Graphics Pipeline]
+I --> J[Display]
+end
+
+subgraph Audio Pipeline
+C --> K[Audio Decoder]
+K --> L[Audio Streaming]
+end
 
 The engine is structured as an asynchronous media pipeline where decoding, rendering, and audio streaming operate independently while synchronized through explicit CPU and GPU primitives.
 
