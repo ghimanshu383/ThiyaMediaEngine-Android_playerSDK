@@ -1,61 +1,105 @@
-## ThiyaPlayer — Vulkan Based Hardware Video Engine for Android
-ThiyaMediaEngine is a high-performance Android Media SDK written in C++/Vulkan. It implements a zero-copy architecture that bypasses standard memcpy bottlenecks by bridging AHardwareBuffer directly into a Vulkan Compute/Graphics pipeline. Designed for low-latency AI filtering, HDR tone mapping, and 4K+ playback without thermal throttling.
+# ThiyaPlayer — Vulkan Based Hardware Video Engine for Android
 
-## Features
---------
+**ThiyaMediaEngine** is a high-performance Android media playback SDK written in **C++ and Vulkan**.  
+The engine implements a **zero-copy GPU pipeline** by bridging **MediaCodec AHardwareBuffer outputs directly into Vulkan compute and graphics pipelines**, eliminating traditional memcpy bottlenecks.
 
-- Vulkan-based rendering pipeline
-- Zero-copy MediaCodec → AHardwareBuffer → Vulkan integration
-- YCbCr sampler conversion using VK_ANDROID_external_memory
-- Compute pipeline for luma/chroma extraction (to own the ownership of frames to be used for filters or ai model integrations)
-- Multi-threaded decode architecture
-- GPU timestamp profiling
-- ImGui debug overlay
-- 4K playback tested on Mali G615 MP2
-- No memory leaks (validated with Vulkan validation layers)
+This architecture enables **low-latency processing pipelines** suitable for:
 
-## Architecture Diagram
+- real-time AI video filtering  
+- HDR tone mapping  
+- GPU accelerated video effects  
+- stable 4K playback on mobile devices  
 
-## Thread Architecture
+The engine is designed as a **multi-threaded asynchronous media pipeline** with explicit GPU synchronization.
 
-- Extractor Thread
-- Video Decoder Thread
-- Audio Decoder Thread
-- Surface Listener Thread
-- Audio Stream Thread
-- Vulkan Renderer Thread
+---
 
-- CPU ↔ CPU : mutex + condition variables
-- CPU ↔ GPU : fences
-- GPU ↔ GPU : semaphores
+# Features
 
-## Performance
+- Vulkan-based rendering pipeline  
+- Zero-copy **MediaCodec → AHardwareBuffer → Vulkan** integration  
+- YCbCr sampler conversion using `VK_ANDROID_external_memory_android_hardware_buffer`  
+- Compute pipeline for **luma/chroma extraction**, enabling downstream AI or filter pipelines  
+- Fully **multi-threaded decode and rendering architecture**  
+- GPU timestamp profiling using Vulkan query pools  
+- ImGui runtime debug overlay  
+- Stable **4K playback tested on Mali G615 MP2**  
+- **No GPU memory leaks** (verified using Vulkan validation layers)
+
+---
+
+# Architecture Overview
+
+*(Architecture diagram will be added here)*
+
+The engine is structured as an asynchronous media pipeline where decoding, rendering, and audio streaming operate independently while synchronized through explicit CPU and GPU primitives.
+
+---
+
+# Thread Architecture
+
+The engine operates using the following dedicated threads:
+
+- Extractor Thread  
+- Video Decoder Thread  
+- Audio Decoder Thread  
+- Surface Listener Thread  
+- Audio Streaming Thread  
+- Vulkan Renderer Thread  
+
+Synchronization strategy:
+
+| Layer | Mechanism |
+|------|-----------|
+CPU ↔ CPU | Mutex + Condition Variables |
+CPU ↔ GPU | Vulkan Fences |
+GPU ↔ GPU | Vulkan Semaphores |
+
+This design allows **non-blocking decode, compute, and rendering pipelines**.
+
+---
+
+# Performance
 
 Device: Moto G86
 GPU: Mali G615 MP2
 
-4K playback results:
+Measured GPU timings:
 
-YCbCr display pipeline: ~3 ms
-Compute pipeline enabled: ~8 ms
+| Pipeline | GPU Time |
+|---------|----------|
+YCbCr display pipeline | ~3 ms |
+Compute + graphics pipeline | ~8 ms |
 
-Stable playback for 10+ minutes
-No thermal throttling observed
+Results:
+
+• Stable **4K playback for extended sessions**  
+• **No thermal throttling observed** during testing  
+• GPU timings verified using **Vulkan timestamp queries**
 
 ## Technical Challenges
 
-- Vulkan external memory import for AHardwareBuffer
-- Correct synchronization between MediaCodec and Vulkan pipelines
-- Correct synchronization between audio codec and video codec
-- YCbCr sampler conversion setup
-- Compute pipeline integration
-- Vulkan memory leak debugging
-- Surface Listener for Hardware buffer extraction leakage prevention.(Gralloc leakage prevention for Images).
-- GPU timestamp profiling.
+The project required solving several low-level integration challenges:
 
-## Future work
+- Vulkan **external memory import** from Android AHardwareBuffer  
+- Synchronization between **MediaCodec decode pipeline and Vulkan rendering pipeline**  
+- Correct synchronization between **audio and video decode pipelines**  
+- YCbCr sampler conversion configuration  
+- Compute pipeline integration for frame processing  
+- GPU timestamp instrumentation  
+- Debugging and eliminating **Vulkan device memory leaks**  
+- Preventing **Gralloc / AImageReader hardware buffer leaks** through proper surface listener lifecycle management
 
-- HDR support
-- Video filters with compute shaders for real time filters.
-- Ai Model integration with zero copy direct gpu integration with luma extracted images.
+## Potential extensions for the engine:
+
+- HDR rendering pipeline support  
+- Real-time video filters implemented via compute shaders  
+- AI model integration using **zero-copy GPU access to extracted luma planes**  
+- GPU accelerated post-processing pipelines
+
+---
+
+# License
+
+MIT License
 
