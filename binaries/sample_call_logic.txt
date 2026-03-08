@@ -1,4 +1,7 @@
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+The Sdk relies on the detached fd to be passed for the play back.
+Include the SDK in the apk context and pass the fd as extra and start the Activity with intent.            
+
+registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     if (result.data != null && result.data?.clipData != null) {
                         val uri = result.data?.clipData?.getItemAt(0)?.uri!!
@@ -15,7 +18,7 @@
                             Log.e("MEDIA", "Failed to open ParcelFileDescriptor")
                             return@registerForActivityResult
                         }
-                        val fd = pfd.detachFd()
+                        val fd = pfd.detachFd() // Imortant to detach the fd so that c++ engine can take ownership of the same.
 
                         val intent = Intent(this@StartupActivity, ThiyaPlayer::class.java)
                         intent.putExtra(ThiyaPlayerConstants.fdString, fd)
