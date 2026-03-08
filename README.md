@@ -91,9 +91,9 @@ This design allows **non-blocking decode, compute, and rendering pipelines**.
 - ABI: Native binaries provided exclusively for **arm64-v8a (Modern 64-bit ARM)**.
 - Vulkan API: **Minimum version 1.1 required.**
 - Required Extensions:
-** VK_ANDROID_external_memory_android_hardware_buffer (Zero-copy path)
-**VK_KHR_sampler_ycbcr_conversion (Hardware YUV processing)
-** VK_KHR_external_memory & VK_KHR_dedicated_allocation
+  -VK_ANDROID_external_memory_android_hardware_buffer (Zero-copy path)
+  -VK_KHR_sampler_ycbcr_conversion (Hardware YUV processing)
+  -VK_KHR_external_memory & VK_KHR_dedicated_allocation
 
 
 # Performance for 4k videos
