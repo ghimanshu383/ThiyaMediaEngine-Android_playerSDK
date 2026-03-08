@@ -1,9 +1,9 @@
-#ThiyaPlayer — Vulkan Based Hardware Video Engine for Android
+## ThiyaPlayer — Vulkan Based Hardware Video Engine for Android
 A high-performance Android video playback engine built with Vulkan, MediaCodec,
 and zero-copy AHardwareBuffer integration. Supports 4K playback with compute
 pipeline processing and GPU timing instrumentation.
 
-##Features
+## Features
 --------
 
 - Vulkan-based rendering pipeline
@@ -16,4 +16,4 @@ pipeline processing and GPU timing instrumentation.
 - 4K playback tested on Mali G615 MP2
 - No memory leaks (validated with Vulkan validation layers)
 
-##Architecture Diagram
+## Architecture Diagram
