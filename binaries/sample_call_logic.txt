@@ -1,0 +1,25 @@
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    if (result.data != null && result.data?.clipData != null) {
+                        val uri = result.data?.clipData?.getItemAt(0)?.uri!!
+                        val name = getFileName(applicationContext, uri)
+                        val file = File(getExternalFilesDir(null), name!!)
+                        contentResolver.openInputStream(uri).use { input ->
+                            file.outputStream().use { output ->
+                                input?.copyTo(output)
+                            }
+                        }
+
+                        val pfd = contentResolver.openFileDescriptor(uri, "r");
+                        if (pfd == null) {
+                            Log.e("MEDIA", "Failed to open ParcelFileDescriptor")
+                            return@registerForActivityResult
+                        }
+                        val fd = pfd.detachFd()
+
+                        val intent = Intent(this@StartupActivity, ThiyaPlayer::class.java)
+                        intent.putExtra(ThiyaPlayerConstants.fdString, fd)
+                        startActivity(intent)
+                    }
+                }
+            }
