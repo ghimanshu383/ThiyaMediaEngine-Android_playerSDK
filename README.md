@@ -84,8 +84,6 @@ GPU ↔ GPU | Vulkan Semaphores |
 
 This design allows **non-blocking decode, compute, and rendering pipelines**.
 
----
-
 ## Architecture Support (Beta)
 
 - ABI: Native binaries provided exclusively for **arm64-v8a (Modern 64-bit ARM)**.
@@ -95,6 +93,7 @@ This design allows **non-blocking decode, compute, and rendering pipelines**.
   - VK_KHR_sampler_ycbcr_conversion (Hardware YUV processing)
   - VK_KHR_external_memory & VK_KHR_dedicated_allocation
 
+---
 
 # Performance for 4k videos
 
