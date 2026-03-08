@@ -1,7 +1,5 @@
 ## ThiyaPlayer — Vulkan Based Hardware Video Engine for Android
-A high-performance Android video playback engine built with Vulkan, MediaCodec,
-and zero-copy AHardwareBuffer integration. Supports 4K playback with compute
-pipeline processing and GPU timing instrumentation.
+ThiyaMediaEngine is a high-performance Android Media SDK written in C++/Vulkan. It implements a zero-copy architecture that bypasses standard memcpy bottlenecks by bridging AHardwareBuffer directly into a Vulkan Compute/Graphics pipeline. Designed for low-latency AI filtering, HDR tone mapping, and 4K+ playback without thermal throttling.
 
 ## Features
 --------
@@ -43,3 +41,21 @@ Compute pipeline enabled: ~8 ms
 
 Stable playback for 10+ minutes
 No thermal throttling observed
+
+## Technical Challenges
+
+- Vulkan external memory import for AHardwareBuffer
+- Correct synchronization between MediaCodec and Vulkan pipelines
+- Correct synchronization between audio codec and video codec
+- YCbCr sampler conversion setup
+- Compute pipeline integration
+- Vulkan memory leak debugging
+- Surface Listener for Hardware buffer extraction leakage prevention.(Gralloc leakage prevention for Images).
+- GPU timestamp profiling.
+
+## Future work
+
+- HDR support
+- Video filters with compute shaders for real time filters.
+- Ai Model integration with zero copy direct gpu integration with luma extracted images.
+
