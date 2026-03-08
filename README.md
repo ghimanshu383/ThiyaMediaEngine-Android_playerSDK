@@ -119,7 +119,7 @@ The project required solving several low-level integration challenges:
 
 ## Sdk integration and usage example
 
-[Android SDK Integration Example](docs/integration_logic.md)
+[Android SDK Integration Example](binaries/integration_logic.md)
 
 ## Potential extensions for the engine:
 
