@@ -1,0 +1,35 @@
+#version 450
+
+layout(local_size_x = 16) in;
+layout(local_size_y = 16) in;
+
+layout (set = 0, binding = 0) uniform sampler2D rgbaVal;
+layout(set = 0, binding = 1, r8) uniform writeonly image2D lumaImage;
+layout(set = 0, binding = 2, rg8) uniform writeonly image2D chromaImage;
+
+layout(push_constant) uniform LayoutInfo {
+    int width;
+    int height;
+}info;
+
+void main() {
+    ivec2 pixels = ivec2(gl_GlobalInvocationID.xy);
+    ivec2 size = imageSize(lumaImage);
+    if (pixels.x >= size.x || pixels.y >= size.y) return;
+    vec2 uv = (vec2(pixels) + vec2(.5)) / vec2(size);
+    vec4 color = texture(rgbaVal, uv);
+
+    float yVal = 0.299f * color.r + 0.587f * color.g + 0.114f * color.b;
+    imageStore(lumaImage, pixels, vec4(yVal, 0, 0, 1.0));
+
+    if ((pixels.x & 1) == 0 && (pixels.y & 1) == 0) {
+        float U = -0.14713 * color.r - 0.28886 * color.g + 0.436 * color.b;
+        float V =  0.615 * color.r - 0.51499 * color.g - 0.10001 * color.b;
+        U += .5f;
+        V += .5f;
+        U = clamp(U, 0.0, 1.0);
+        V = clamp(V, 0.0, 1.0);
+        ivec2 chromaPixel = pixels >> 1;
+        imageStore(chromaImage, chromaPixel, vec4(U, V, 0, 1.0f));
+    }
+}
