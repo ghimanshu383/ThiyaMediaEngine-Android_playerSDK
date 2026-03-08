@@ -35,7 +35,6 @@ The engine is designed as a **multi-threaded asynchronous media pipeline** with 
 
 # Architecture Overview
 
-```markdown
 ```mermaid
 flowchart LR
 
@@ -58,6 +57,7 @@ subgraph Audio Pipeline
 C --> K[Audio Decoder]
 K --> L[Audio Streaming]
 end
+```
 
 The engine is structured as an asynchronous media pipeline where decoding, rendering, and audio streaming operate independently while synchronized through explicit CPU and GPU primitives.
 
