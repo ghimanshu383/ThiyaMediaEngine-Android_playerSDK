@@ -59,7 +59,7 @@ This design allows **non-blocking decode, compute, and rendering pipelines**.
 
 ---
 
-# Performance
+# Performance for 4k videos
 
 Device: Moto G86
 GPU: Mali G615 MP2
@@ -69,7 +69,7 @@ Measured GPU timings:
 | Pipeline | GPU Time |
 |---------|----------|
 YCbCr display pipeline | ~3 ms |
-Compute + graphics pipeline | ~8 ms |
+Compute + graphics pipeline | ~10 ms |
 
 Results:
 
