@@ -35,7 +35,7 @@ The engine is designed as a **multi-threaded asynchronous media pipeline** with 
 
 # Architecture Overview
 
-*(Architecture diagram will be added here)*
+![4K Vulkan Playback Demo](docs/architecture.js)
 
 The engine is structured as an asynchronous media pipeline where decoding, rendering, and audio streaming operate independently while synchronized through explicit CPU and GPU primitives.
 
